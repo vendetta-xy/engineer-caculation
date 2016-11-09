@@ -12,22 +12,24 @@ inline double linelen(double (*f)(double x), double a, double b) {
 }
 double arclen(double(*f)(double x), double a, double b, double e) {
 	double result = 0;
-	for (int n = 1; abs(a - b) / n < e; n++)
+	for (int n = 1000; abs(a - b) / n > e; n *= 2) {
+		result = 0;
 		for (double j = a; (j + (b - a) / n) <= b; j += ((b - a) / n))
 			result += linelen(f, j, j + (b - a) / n);
+	}
 	return result;
 }
 double f(double x) {
-	return x*x;
+	return x;
 }
 
 int main()
 {
 	double a, b;
 	cout << "请输入函数的边界： " << endl;
-	cout << "a= ";
+	cout << "a=";
 	cin >> a;
-	cout << "b= ";
+	cout << "b=";
 	cin >> b;
 	double(*fun)(double ) = f;
 	
